@@ -37,7 +37,7 @@ Create an application to manage discount codes for sales or promotions (a.k.a pr
 
 1. Create a new product `POST /products`
 2. Get all products `GET /products`
-3. Update product data `PATCH /products/{productId}`
+3. Update product data `PUT /products/{productId}`
 4. Create a new promo code. `POST /promo-codes`
 5. Get all promo codes.`GET /promo-codes`
 6. Get one promo code's details by providing the promo code. The detail should also contain the number of usages.  `GET /promo-codes/{promoCode}`
