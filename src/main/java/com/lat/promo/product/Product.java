@@ -1,2 +1,4 @@
-package com.lat.promo.product;public class Product {
+package com.lat.promo.product;
+
+public class Product {
 }

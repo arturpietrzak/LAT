@@ -41,7 +41,7 @@ Create an application to manage discount codes for sales or promotions (a.k.a pr
 4. Create a new promo code. `POST /promo-codes`
 5. Get all promo codes.`GET /promo-codes`
 6. Get one promo code's details by providing the promo code. The detail should also contain the number of usages.  `GET /promo-codes/{promoCode}`
-7. Get the discount price by providing a product and a promo code. `GET /discount`
+7. Get the discount price by providing a product and a promo code. `POST /discount`
 8. Simulate purchase `POST /purchase`
 9. [Optional] A sales report: number of purchases and total value by currency (see below) `GET /sales-report`
 
