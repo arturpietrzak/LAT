@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Inheritance
 @DiscriminatorColumn(name="PROMO_TYPE")
 @Table(name="PromoCodes")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "promo_type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "promoType")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "VALUE", value = ValueCode.class),
         @JsonSubTypes.Type(name = "PERCENTAGE", value = PercentageCode.class)
