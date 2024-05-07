@@ -7,12 +7,9 @@ import com.lat.promo.product.ProductService;
 import com.lat.promo.promoCode.PromoCode;
 import com.lat.promo.promoCode.PromoCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 public class PurchaseService {
@@ -24,18 +21,6 @@ public class PurchaseService {
     ProductService productService;
     @Autowired
     DiscountService discountService;
-
-    public int getPurchaseCountByPromoCode(String promoCode) {
-        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode);
-
-        if (promoCodeObject != null) {
-            List<Purchase> purchases = purchaseRepository.findByPromoCode(promoCodeObject);
-
-            return purchases.size();
-        }
-
-        return -1;
-    }
 
     public Purchase processPurchase(Long productId, String promoCode) {
         Product product = productService.getProductById(productId);

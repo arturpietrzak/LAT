@@ -3,28 +3,31 @@ package com.lat.promo.product;
 import com.lat.promo.promoCode.PromoCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Component
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public void addNewProduct(Product product) {
-        Product newProduct = productRepository.save(product);
+    public Product addNewProduct(Product product) {
+        return productRepository.save(product);
     }
 
-    public void updateProduct(Long productId, Product product) {
-        Optional<Product> productOpt = productRepository.findById(productId);
+    public Product updateProduct(Long productId, Product product) {
+        Optional<Product> productOptional = productRepository.findById(productId);
 
-        if (productOpt.isEmpty()) {
-            return;
+        if (productOptional.isEmpty()) {
+            throw new ResponseStatusException(NOT_FOUND, "Product not found.");
         }
 
         product.setId(productId);
-        productRepository.save(product);
+        return productRepository.save(product);
     }
 
     public Product getProductById(Long productId) {
@@ -33,7 +36,7 @@ public class ProductService {
         if (productOptional.isPresent()) {
             return productOptional.get();
         } else {
-            return null;
+            throw new ResponseStatusException(NOT_FOUND, "Promo code not found.");
         }
     }
 

@@ -1,9 +1,14 @@
 package com.lat.promo.promoCode;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping(path = "api/v1/promo-codes")
@@ -16,17 +21,23 @@ public class PromoCodeController {
     }
 
     @GetMapping
-    public List<PromoCode> getPromoCodes(){
-        return promoCodeService.getAllPromoCodes();
+    public ResponseEntity<List<PromoCode>> getPromoCodes(){
+        return ResponseEntity.ok(promoCodeService.getAllPromoCodes());
     }
 
     @GetMapping("/{promoCode}")
-    public PromoCode getPromoCodeByCode(@PathVariable String promoCode){
-        return promoCodeService.getPromoCodeByCode(promoCode);
+    public ResponseEntity<PromoCode> getPromoCodeByCode(@PathVariable String promoCode){
+        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode);
+
+        if (promoCodeObject == null) {
+            throw new ResponseStatusException(NOT_FOUND, "Promo code could not be found.");
+        }
+
+        return ResponseEntity.ok(promoCodeObject);
     }
 
     @PostMapping
-    public void addPromoCode(@RequestBody PromoCode promoCode) {
-        promoCodeService.addNewPromoCode(promoCode);
+    public ResponseEntity<PromoCode> addPromoCode(@RequestBody PromoCode promoCode) {
+        return ResponseEntity.ok(promoCodeService.addNewPromoCode(promoCode));
     }
 }
