@@ -2,10 +2,7 @@ package com.lat.promo.purchase;
 
 import com.lat.promo.product.Product;
 import com.lat.promo.promoCode.PromoCode;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -21,7 +18,9 @@ public class Purchase {
     private Currency currency;
     private BigDecimal price;
     private BigDecimal discount;
+    @OneToOne
     private Product product;
+    @OneToOne
     private PromoCode promoCode;
 
     public Purchase() {

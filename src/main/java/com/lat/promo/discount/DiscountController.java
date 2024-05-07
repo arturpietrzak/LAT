@@ -2,6 +2,7 @@ package com.lat.promo.discount;
 
 import com.lat.promo.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -17,10 +18,10 @@ public class DiscountController {
     }
 
     @PostMapping
-    public BigDecimal calculateDiscountedPrice(@RequestBody CalculateDiscountedPriceDTO calculateDiscountedPriceDTO) {
+    public ResponseEntity<CalculateDiscountedPriceResponseDTO> calculateDiscountedPrice(@RequestBody CalculateDiscountedPriceRequestDTO calculateDiscountedPriceRequestDTO) {
         return discountService.calculateDiscountedPrice(
-                calculateDiscountedPriceDTO.getProductId(),
-                calculateDiscountedPriceDTO.getPromoCode()
+                calculateDiscountedPriceRequestDTO.getProductId(),
+                calculateDiscountedPriceRequestDTO.getPromoCode()
         );
     }
 }

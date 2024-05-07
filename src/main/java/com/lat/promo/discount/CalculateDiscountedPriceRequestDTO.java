@@ -1,10 +1,10 @@
 package com.lat.promo.discount;
 
-public class CalculateDiscountedPriceDTO {
+public class CalculateDiscountedPriceRequestDTO {
     private String promoCode;
     private Long productId;
 
-    public CalculateDiscountedPriceDTO(String promoCode, Long productId) {
+    public CalculateDiscountedPriceRequestDTO(String promoCode, Long productId) {
         this.promoCode = promoCode;
         this.productId = productId;
     }
