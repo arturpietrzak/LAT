@@ -1,7 +1,7 @@
 package com.lat.promo.purchase;
 
 import com.lat.promo.product.Product;
-import com.lat.promo.promoCode.PromoCode;
+import com.lat.promo.coupon.Coupon;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,37 +21,37 @@ public class Purchase {
     @ManyToOne
     private Product product;
     @ManyToOne
-    private PromoCode promoCode;
+    private Coupon coupon;
 
     public Purchase() {
     }
 
     @Autowired
-    public Purchase(Currency currency, BigDecimal price, BigDecimal discount, Product product, PromoCode promoCode) {
+    public Purchase(Currency currency, BigDecimal price, BigDecimal discount, Product product, Coupon coupon) {
         this.dateOfPurchase = LocalDate.now();
         this.currency = currency;
         this.price = price;
         this.discount = discount;
         this.product = product;
-        this.promoCode = promoCode;
+        this.coupon = coupon;
     }
 
-    public Purchase(Long id, LocalDate dateOfPurchase, Currency currency, BigDecimal price, BigDecimal discount, Product product, PromoCode promoCode) {
+    public Purchase(Long id, LocalDate dateOfPurchase, Currency currency, BigDecimal price, BigDecimal discount, Product product, Coupon coupon) {
         this.id = id;
         this.dateOfPurchase = dateOfPurchase;
         this.currency = currency;
         this.price = price;
         this.discount = discount;
         this.product = product;
-        this.promoCode = promoCode;
+        this.coupon = coupon;
     }
 
-    public PromoCode getPromoCode() {
-        return promoCode;
+    public Coupon getPromoCode() {
+        return coupon;
     }
 
-    public void setPromoCode(PromoCode promoCode) {
-        this.promoCode = promoCode;
+    public void setPromoCode(Coupon coupon) {
+        this.coupon = coupon;
     }
 
     public Product getProduct() {

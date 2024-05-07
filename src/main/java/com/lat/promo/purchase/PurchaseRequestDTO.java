@@ -2,18 +2,18 @@ package com.lat.promo.purchase;
 
 public class PurchaseRequestDTO {
     private Long productId;
-    private String promoCode;
+    private String code;
 
-    public PurchaseRequestDTO(Long productId, String promoCode) {
+    public PurchaseRequestDTO(Long productId, String code) {
         this.productId = productId;
-        this.promoCode = promoCode;
+        this.code = code;
     }
 
     public Long getProductId() {
         return productId;
     }
 
-    public String getPromoCode() {
-        return promoCode;
+    public String getCode() {
+        return code;
     }
 }

@@ -1,4 +1,4 @@
-package com.lat.promo.promoCode;
+package com.lat.promo.coupon;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -9,19 +9,19 @@ import java.time.LocalDate;
 
 @Entity
 @DiscriminatorValue("PERCENTAGE")
-public class PercentageCode extends PromoCode {
+public class PercentageCoupon extends Coupon {
     private BigDecimal discountPercentage;
 
-    public PercentageCode() {
+    public PercentageCoupon() {
     }
 
     @Autowired
-    public PercentageCode(String code, LocalDate expirationDate, int maxUsagesAmount, BigDecimal discountPercentage) {
+    public PercentageCoupon(String code, LocalDate expirationDate, int maxUsagesAmount, BigDecimal discountPercentage) {
         super(code, expirationDate, maxUsagesAmount);
         this.discountPercentage = discountPercentage;
     }
 
-    public PercentageCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, BigDecimal discountPercentage) {
+    public PercentageCoupon(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, BigDecimal discountPercentage) {
         super(id, code, expirationDate, maxUsagesAmount);
         this.discountPercentage = discountPercentage;
     }

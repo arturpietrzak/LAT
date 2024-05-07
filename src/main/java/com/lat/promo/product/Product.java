@@ -18,7 +18,9 @@ public class Product {
     @NotNull
     private String name;
     private String description;
+    @NotNull
     private Currency currency;
+    @NotNull
     private BigDecimal price;
 
     public Product() {

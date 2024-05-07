@@ -1,9 +1,7 @@
-package com.lat.promo.promoCode;
+package com.lat.promo.coupon;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.lat.promo.purchase.PurchaseService;
-import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.Formula;
@@ -15,13 +13,13 @@ import java.time.LocalDate;
 @Configurable
 @Entity
 @Inheritance
-@DiscriminatorColumn(name="PROMO_TYPE")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "promoType")
+@DiscriminatorColumn(name="COUPON_TYPE")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "couponType")
 @JsonSubTypes({
-        @JsonSubTypes.Type(name = "VALUE", value = ValueCode.class),
-        @JsonSubTypes.Type(name = "PERCENTAGE", value = PercentageCode.class)
+        @JsonSubTypes.Type(name = "VALUE", value = ValueCoupon.class),
+        @JsonSubTypes.Type(name = "PERCENTAGE", value = PercentageCoupon.class)
 })
-public abstract class PromoCode {
+public abstract class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,20 +28,20 @@ public abstract class PromoCode {
     private String code;
     private LocalDate expirationDate;
     private int maxUsages;
-    @Formula(value = "(SELECT max_usages FROM promo_code p WHERE p.id=id) - (SELECT COUNT(*) FROM purchase p WHERE p.promo_code_id=id)")
+    @Formula(value = "(SELECT max_usages FROM coupon p WHERE p.id=id) - (SELECT COUNT(*) FROM purchase p WHERE p.coupon=id)")
     private int usagesLeft;
 
-    public PromoCode() {
+    public Coupon() {
     }
 
     @Autowired
-    public PromoCode(String code, LocalDate expirationDate, int maxUsages) {
+    public Coupon(String code, LocalDate expirationDate, int maxUsages) {
         this.code = code;
         this.expirationDate = expirationDate;
         this.maxUsages = maxUsages;
     }
 
-    public PromoCode(Long id, String code, LocalDate expirationDate, int maxUsages) {
+    public Coupon(Long id, String code, LocalDate expirationDate, int maxUsages) {
         this.id = id;
         this.code = code;
         this.expirationDate = expirationDate;

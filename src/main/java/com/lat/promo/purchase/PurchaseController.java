@@ -19,7 +19,7 @@ public class PurchaseController {
         return ResponseEntity.ok(
                 purchaseService.processPurchase(
                     purchaseRequestDTO.getProductId(),
-                    purchaseRequestDTO.getPromoCode()
+                    purchaseRequestDTO.getCode()
                 )
         );
     }

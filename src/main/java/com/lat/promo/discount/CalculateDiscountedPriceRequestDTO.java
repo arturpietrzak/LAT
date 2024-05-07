@@ -1,16 +1,16 @@
 package com.lat.promo.discount;
 
 public class CalculateDiscountedPriceRequestDTO {
-    private String promoCode;
+    private String code;
     private Long productId;
 
-    public CalculateDiscountedPriceRequestDTO(String promoCode, Long productId) {
-        this.promoCode = promoCode;
+    public CalculateDiscountedPriceRequestDTO(String code, Long productId) {
+        this.code = code;
         this.productId = productId;
     }
 
-    public String getPromoCode() {
-        return promoCode;
+    public String getCode() {
+        return code;
     }
 
     public Long getProductId() {

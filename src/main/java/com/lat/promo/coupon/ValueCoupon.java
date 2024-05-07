@@ -1,6 +1,4 @@
-package com.lat.promo.promoCode;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+package com.lat.promo.coupon;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -12,21 +10,21 @@ import java.util.Currency;
 
 @Entity
 @DiscriminatorValue("VALUE")
-public class ValueCode extends PromoCode{
+public class ValueCoupon extends Coupon {
     private Currency currency;
     private BigDecimal discountAmount;
 
-    public ValueCode() {
+    public ValueCoupon() {
     }
 
     @Autowired
-    public ValueCode(String code, LocalDate expirationDate, int maxUsagesAmount, Currency currency, BigDecimal discountAmount) {
+    public ValueCoupon(String code, LocalDate expirationDate, int maxUsagesAmount, Currency currency, BigDecimal discountAmount) {
         super(code, expirationDate, maxUsagesAmount);
         this.currency = currency;
         this.discountAmount = discountAmount;
     }
 
-    public ValueCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, Currency currency, BigDecimal discountAmount) {
+    public ValueCoupon(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, Currency currency, BigDecimal discountAmount) {
         super(id, code, expirationDate, maxUsagesAmount);
         this.currency = currency;
         this.discountAmount = discountAmount;

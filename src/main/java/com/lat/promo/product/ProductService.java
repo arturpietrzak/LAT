@@ -1,6 +1,5 @@
 package com.lat.promo.product;
 
-import com.lat.promo.promoCode.PromoCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,7 +35,7 @@ public class ProductService {
         if (productOptional.isPresent()) {
             return productOptional.get();
         } else {
-            throw new ResponseStatusException(NOT_FOUND, "Promo code not found.");
+            throw new ResponseStatusException(NOT_FOUND, "Product not found.");
         }
     }
 

@@ -21,7 +21,7 @@ public class DiscountController {
         return ResponseEntity.ok(
                 discountService.calculateDiscountedPrice(
                     calculateDiscountedPriceRequestDTO.getProductId(),
-                    calculateDiscountedPriceRequestDTO.getPromoCode()
+                    calculateDiscountedPriceRequestDTO.getCode()
                 )
         );
     }
