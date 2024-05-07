@@ -23,17 +23,16 @@ public class ProductService {
         Optional<Product> productOptional = productRepository.findById(productId);
 
         if (productOptional.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND, "Product not found.");
+            return null;
         }
 
         Product updatedProduct = null;
-
         product.setId(productId);
 
         try {
             updatedProduct = productRepository.save(product);
         } catch (Exception e) {
-            throw new ResponseStatusException(BAD_REQUEST, "The product couldn't be updated.");
+            return null;
         }
 
         return updatedProduct;
@@ -45,7 +44,7 @@ public class ProductService {
         if (productOptional.isPresent()) {
             return productOptional.get();
         } else {
-            throw new ResponseStatusException(NOT_FOUND, "Product not found.");
+            return null;
         }
     }
 

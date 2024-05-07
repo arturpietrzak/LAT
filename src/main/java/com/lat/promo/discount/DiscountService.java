@@ -28,12 +28,8 @@ public class DiscountService {
         Coupon couponObject = couponService.getCouponByCode(code);
         LocalDate today = LocalDate.now();
 
-        if (couponObject == null) {
-            throw new ResponseStatusException(NOT_FOUND, "Coupon not found.");
-        }
-
-        if (product == null) {
-            throw new ResponseStatusException(NOT_FOUND, "Product not found.");
+        if (couponObject == null || product == null) {
+            return null;
         }
 
         if (couponObject.getUsagesLeft() <= 0) {

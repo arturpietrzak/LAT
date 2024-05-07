@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
@@ -37,6 +38,12 @@ public class CouponController {
 
     @PostMapping
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
+        Coupon newCoupon = couponService.addNewCoupon(coupon);
+
+        if (newCoupon == null) {
+            throw new ResponseStatusException(BAD_REQUEST, "Couldn't create the coupon.");
+        }
+
         return ResponseEntity.ok(couponService.addNewCoupon(coupon));
     }
 }

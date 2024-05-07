@@ -38,7 +38,7 @@ public class PurchaseService {
             try {
                 purchaseRepository.save(purchase);
             } catch (Exception e) {
-                throw new ResponseStatusException(BAD_REQUEST, "The purchase couldn't be performed.");
+                return null;
             }
         }
 
@@ -51,15 +51,16 @@ public class PurchaseService {
             try {
                 purchaseRepository.save(purchase);
             } catch (Exception e) {
-                throw new ResponseStatusException(BAD_REQUEST, "The purchase couldn't be performed.");
+                return null;
             }
         }
 
+        purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
+
         try {
-            purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
             purchaseRepository.save(purchase);
         } catch (Exception e) {
-            throw new ResponseStatusException(BAD_REQUEST, "The purchase couldn't be performed.");
+            return null;
         }
 
         return purchase;

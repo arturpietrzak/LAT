@@ -22,7 +22,7 @@ public class CouponService {
         String alphanumeric_regex = "^[a-zA-Z0-9]*$";
 
         if (!coupon.getCode().matches(alphanumeric_regex)) {
-            throw new ResponseStatusException(BAD_REQUEST, "Promo code needs to be alphanumeric.");
+            return null;
         }
 
         Coupon newCoupon = null;
@@ -30,7 +30,7 @@ public class CouponService {
         try {
             newCoupon = couponRepository.save(coupon);
         } catch (Exception e) {
-            throw new ResponseStatusException(BAD_REQUEST, "The coupon couldn't be created.");
+            return null;
         }
 
         return newCoupon;
