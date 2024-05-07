@@ -28,10 +28,10 @@ public class DiscountService {
             String promoCode
     ) {
         Product product = productService.getProductById(productId);
-        GetPromoCodeResponseDTO getPromoCodeResponseDTO = promoCodeService.getPromoCodeByCode(promoCode);
+        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode);
         LocalDate today = LocalDate.now();
 
-        if (getPromoCodeResponseDTO == null) {
+        if (promoCodeObject == null) {
             throw new ResponseStatusException(NOT_FOUND, "Promo code not found.");
         }
 
@@ -39,7 +39,7 @@ public class DiscountService {
             throw new ResponseStatusException(NOT_FOUND, "Product not found.");
         }
 
-        if (getPromoCodeResponseDTO.getUsagesLeft() <= 0) {
+        if (promoCodeObject.getUsagesLeft() <= 0) {
             return new CalculateDiscountedPriceResponseDTO(
                     product.getPrice(),
                     product.getCurrency(),
@@ -48,7 +48,7 @@ public class DiscountService {
             );
         }
 
-        if (getPromoCodeResponseDTO.getPromoCode().getExpirationDate().isBefore(today)) {
+        if (promoCodeObject.getExpirationDate().isBefore(today)) {
             return new CalculateDiscountedPriceResponseDTO(
                     product.getPrice(),
                     product.getCurrency(),
@@ -57,8 +57,8 @@ public class DiscountService {
             );
         }
 
-        if (getPromoCodeResponseDTO.getPromoCode() instanceof ValueCode) {
-            ValueCode valueCode = (ValueCode)getPromoCodeResponseDTO.getPromoCode();
+        if (promoCodeObject instanceof ValueCode) {
+            ValueCode valueCode = (ValueCode)promoCodeObject;
 
             if (valueCode.getCurrency().equals(product.getCurrency())) {
                 BigDecimal discountedPrice = product.getPrice().subtract(valueCode.getDiscountAmount());
@@ -83,7 +83,7 @@ public class DiscountService {
             );
         }
 
-        PercentageCode percentageCode = (PercentageCode)getPromoCodeResponseDTO.getPromoCode();
+        PercentageCode percentageCode = (PercentageCode)promoCodeObject;
         BigDecimal percentageDiscountedPrice = product.getPrice().subtract(
                 product.getPrice().multiply(percentageCode.getDiscountPercentage())
         );

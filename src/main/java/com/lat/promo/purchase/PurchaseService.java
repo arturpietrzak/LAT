@@ -26,7 +26,7 @@ public class PurchaseService {
     DiscountService discountService;
 
     public int getPurchaseCountByPromoCode(String promoCode) {
-        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode).getPromoCode();
+        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode);
 
         if (promoCodeObject != null) {
             List<Purchase> purchases = purchaseRepository.findByPromoCode(promoCodeObject);
@@ -39,7 +39,7 @@ public class PurchaseService {
 
     public Purchase processPurchase(Long productId, String promoCode) {
         Product product = productService.getProductById(productId);
-        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode).getPromoCode();
+        PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode);
         BigDecimal discount = new BigDecimal("0.00");
 
         // If promoCode is null, create Purchase without any discount and return

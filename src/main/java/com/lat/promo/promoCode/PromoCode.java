@@ -6,6 +6,7 @@ import com.lat.promo.purchase.PurchaseService;
 import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Formula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
@@ -15,7 +16,6 @@ import java.time.LocalDate;
 @Entity
 @Inheritance
 @DiscriminatorColumn(name="PROMO_TYPE")
-@Table(name="PromoCodes")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "promoType")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "VALUE", value = ValueCode.class),
@@ -29,24 +29,25 @@ public abstract class PromoCode {
     @Size(min=3, max=32)
     private String code;
     private LocalDate expirationDate;
-    private int maxUsagesAmount;
-
+    private int maxUsages;
+    @Formula(value = "(SELECT max_usages FROM promo_code p WHERE p.id=id) - (SELECT COUNT(*) FROM purchase p WHERE p.promo_code_id=id)")
+    private int usagesLeft;
 
     public PromoCode() {
     }
 
     @Autowired
-    public PromoCode(String code, LocalDate expirationDate, int maxUsagesAmount) {
+    public PromoCode(String code, LocalDate expirationDate, int maxUsages) {
         this.code = code;
         this.expirationDate = expirationDate;
-        this.maxUsagesAmount = maxUsagesAmount;
+        this.maxUsages = maxUsages;
     }
 
-    public PromoCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount) {
+    public PromoCode(Long id, String code, LocalDate expirationDate, int maxUsages) {
         this.id = id;
         this.code = code;
         this.expirationDate = expirationDate;
-        this.maxUsagesAmount = maxUsagesAmount;
+        this.maxUsages = maxUsages;
     }
 
     public Long getId() {
@@ -73,11 +74,19 @@ public abstract class PromoCode {
         this.expirationDate = expirationDate;
     }
 
-    public int getMaxUsagesAmount() {
-        return maxUsagesAmount;
+    public int getMaxUsages() {
+        return maxUsages;
     }
 
-    public void setMaxUsagesAmount(int maxUsagesAmount) {
-        this.maxUsagesAmount = maxUsagesAmount;
+    public void setMaxUsages(int maxUsages) {
+        this.maxUsages = maxUsages;
+    }
+
+    public int getUsagesLeft() {
+        return usagesLeft;
+    }
+
+    public void setUsagesLeft(int usagesLeft) {
+        this.usagesLeft = usagesLeft;
     }
 }
