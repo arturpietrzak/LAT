@@ -20,6 +20,12 @@ public class PromoCodeService {
     }
 
     public void addNewPromoCode(PromoCode promoCode) {
+        String alphanumeric_regex = "^[a-zA-Z0-9]*$";
+
+        if (!promoCode.getCode().matches(alphanumeric_regex)) {
+            return;
+        }
+
         PromoCode promoCodeObject = promoCodeRepository.save(promoCode);
     }
 

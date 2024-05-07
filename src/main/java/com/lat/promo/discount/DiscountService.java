@@ -23,7 +23,10 @@ public class DiscountService {
     @Autowired
     ProductService productService;
 
-    public ResponseEntity<CalculateDiscountedPriceResponseDTO> calculateDiscountedPrice(Long productId, String promoCode) {
+    public ResponseEntity<CalculateDiscountedPriceResponseDTO> calculateDiscountedPrice(
+            Long productId,
+            String promoCode
+    ) {
         Product product = productService.getProductById(productId);
         PromoCode promoCodeObject = promoCodeService.getPromoCodeByCode(promoCode);
         LocalDate today = LocalDate.now();
@@ -70,7 +73,9 @@ public class DiscountService {
         }
 
         PercentageCode percentageCode = (PercentageCode)promoCodeObject;
-        BigDecimal percentageDiscountedPrice = product.getPrice().subtract(product.getPrice().multiply(percentageCode.getDiscountPercentage()));
+        BigDecimal percentageDiscountedPrice = product.getPrice().subtract(
+                product.getPrice().multiply(percentageCode.getDiscountPercentage())
+        );
 
         return new ResponseEntity<>(
                 new CalculateDiscountedPriceResponseDTO(

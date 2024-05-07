@@ -18,7 +18,9 @@ public class DiscountController {
     }
 
     @PostMapping
-    public ResponseEntity<CalculateDiscountedPriceResponseDTO> calculateDiscountedPrice(@RequestBody CalculateDiscountedPriceRequestDTO calculateDiscountedPriceRequestDTO) {
+    public ResponseEntity<CalculateDiscountedPriceResponseDTO> calculateDiscountedPrice(
+            @RequestBody CalculateDiscountedPriceRequestDTO calculateDiscountedPriceRequestDTO
+    ) {
         return discountService.calculateDiscountedPrice(
                 calculateDiscountedPriceRequestDTO.getProductId(),
                 calculateDiscountedPriceRequestDTO.getPromoCode()
