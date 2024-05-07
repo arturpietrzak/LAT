@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
-    @Query("SELECT c FROM Coupon pc WHERE c.code = ?1")
+    @Query("SELECT c FROM Coupon c WHERE c.code = ?1")
     Optional<Coupon> findCouponByCode(String code);
 }
 

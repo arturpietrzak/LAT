@@ -28,7 +28,7 @@ public abstract class Coupon {
     private String code;
     private LocalDate expirationDate;
     private int maxUsages;
-    @Formula(value = "(SELECT max_usages FROM coupon p WHERE p.id=id) - (SELECT COUNT(*) FROM purchase p WHERE p.coupon=id)")
+    @Formula(value = "(SELECT max_usages FROM coupon p WHERE p.id=id) - (SELECT COUNT(*) FROM purchase p WHERE p.coupon_id=id)")
     private int usagesLeft;
 
     public Coupon() {
