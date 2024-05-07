@@ -3,6 +3,9 @@ package com.lat.promo.purchase;
 import com.lat.promo.product.Product;
 import com.lat.promo.coupon.Coupon;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -14,9 +17,17 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
     private LocalDate dateOfPurchase;
+    @NotNull
     private Currency currency;
+    @NotNull
+    @Min(0)
+    @Digits(integer=32, fraction=2)
     private BigDecimal price;
+    @NotNull
+    @Min(0)
+    @Digits(integer=32, fraction=2)
     private BigDecimal discount;
     @ManyToOne
     private Product product;
@@ -46,12 +57,44 @@ public class Purchase {
         this.coupon = coupon;
     }
 
-    public Coupon getPromoCode() {
-        return coupon;
+    public Long getId() {
+        return id;
     }
 
-    public void setPromoCode(Coupon coupon) {
-        this.coupon = coupon;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotNull LocalDate getDateOfPurchase() {
+        return dateOfPurchase;
+    }
+
+    public void setDateOfPurchase(@NotNull LocalDate dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public @NotNull Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(@NotNull Currency currency) {
+        this.currency = currency;
+    }
+
+    public @NotNull @Min(0) @Digits(integer = 32, fraction = 2) BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(@NotNull @Min(0) @Digits(integer = 32, fraction = 2) BigDecimal price) {
+        this.price = price;
+    }
+
+    public @NotNull @Min(0) @Digits(integer = 32, fraction = 2) BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(@NotNull @Min(0) @Digits(integer = 32, fraction = 2) BigDecimal discount) {
+        this.discount = discount;
     }
 
     public Product getProduct() {
@@ -62,43 +105,11 @@ public class Purchase {
         this.product = product;
     }
 
-    public BigDecimal getDiscount() {
-        return discount;
+    public Coupon getCoupon() {
+        return coupon;
     }
 
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public LocalDate getDateOfPurchase() {
-        return dateOfPurchase;
-    }
-
-    public void setDateOfPurchase(LocalDate dateOfPurchase) {
-        this.dateOfPurchase = dateOfPurchase;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
     }
 }

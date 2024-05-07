@@ -3,6 +3,7 @@ package com.lat.promo.coupon;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.Formula;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,11 @@ public abstract class Coupon {
     private Long id;
     @Column(unique=true)
     @Size(min=3, max=32)
+    @NotNull
     private String code;
+    @NotNull
     private LocalDate expirationDate;
+    @NotNull
     private int maxUsages;
     @Formula(value = "(SELECT max_usages FROM coupon p WHERE p.id=id) - (SELECT COUNT(*) FROM purchase p WHERE p.coupon_id=id)")
     private int usagesLeft;

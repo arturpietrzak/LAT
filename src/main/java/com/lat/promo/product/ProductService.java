@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Component
@@ -25,8 +26,17 @@ public class ProductService {
             throw new ResponseStatusException(NOT_FOUND, "Product not found.");
         }
 
+        Product updatedProduct = null;
+
         product.setId(productId);
-        return productRepository.save(product);
+
+        try {
+            updatedProduct = productRepository.save(product);
+        } catch (Exception e) {
+            throw new ResponseStatusException(BAD_REQUEST, "The product couldn't be updated.");
+        }
+
+        return updatedProduct;
     }
 
     public Product getProductById(Long productId) {

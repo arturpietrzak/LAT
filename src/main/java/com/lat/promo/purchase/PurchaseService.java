@@ -8,8 +8,11 @@ import com.lat.promo.product.ProductService;
 import com.lat.promo.coupon.Coupon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Component
 public class PurchaseService {
@@ -26,27 +29,38 @@ public class PurchaseService {
         Product product = productService.getProductById(productId);
         Coupon couponObject = couponService.getCouponByCode(code);
         BigDecimal discount = new BigDecimal("0.00");
+        Purchase purchase = null;
 
         // If promoCode is null, create Purchase without any discount and return
         if (code == null) {
-            Purchase purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
-            purchaseRepository.save(purchase);
+            purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
 
-            return purchase;
+            try {
+                purchaseRepository.save(purchase);
+            } catch (Exception e) {
+                throw new ResponseStatusException(BAD_REQUEST, "The purchase couldn't be performed.");
+            }
         }
 
         CalculateDiscountedPriceResponseDTO calculateDiscountedPriceResponseDTO = discountService.calculateDiscountedPrice(productId, code);
 
         if (calculateDiscountedPriceResponseDTO.isValid()) {
             discount = product.getPrice().subtract(calculateDiscountedPriceResponseDTO.getPrice());
-            Purchase purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, couponObject);
+            purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, couponObject);
 
-            purchaseRepository.save(purchase);
-            return purchase;
+            try {
+                purchaseRepository.save(purchase);
+            } catch (Exception e) {
+                throw new ResponseStatusException(BAD_REQUEST, "The purchase couldn't be performed.");
+            }
         }
 
-        Purchase purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
-        purchaseRepository.save(purchase);
+        try {
+            purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
+            purchaseRepository.save(purchase);
+        } catch (Exception e) {
+            throw new ResponseStatusException(BAD_REQUEST, "The purchase couldn't be performed.");
+        }
 
         return purchase;
     }

@@ -2,6 +2,10 @@ package com.lat.promo.coupon;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -10,6 +14,10 @@ import java.time.LocalDate;
 @Entity
 @DiscriminatorValue("PERCENTAGE")
 public class PercentageCoupon extends Coupon {
+    @NotNull
+    @Min(0)
+    @Max(1)
+    @Digits(integer=1, fraction=2)
     private BigDecimal discountPercentage;
 
     public PercentageCoupon() {

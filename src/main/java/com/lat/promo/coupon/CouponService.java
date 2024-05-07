@@ -25,7 +25,15 @@ public class CouponService {
             throw new ResponseStatusException(BAD_REQUEST, "Promo code needs to be alphanumeric.");
         }
 
-        return couponRepository.save(coupon);
+        Coupon newCoupon = null;
+
+        try {
+            newCoupon = couponRepository.save(coupon);
+        } catch (Exception e) {
+            throw new ResponseStatusException(BAD_REQUEST, "The coupon couldn't be created.");
+        }
+
+        return newCoupon;
     }
 
     public Coupon getCouponByCode(String code) {

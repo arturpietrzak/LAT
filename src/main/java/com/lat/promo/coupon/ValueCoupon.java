@@ -2,6 +2,10 @@ package com.lat.promo.coupon;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -11,7 +15,11 @@ import java.util.Currency;
 @Entity
 @DiscriminatorValue("VALUE")
 public class ValueCoupon extends Coupon {
+    @NotNull
     private Currency currency;
+    @NotNull
+    @Min(0)
+    @Digits(integer=32, fraction=2)
     private BigDecimal discountAmount;
 
     public ValueCoupon() {
