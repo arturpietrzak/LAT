@@ -21,7 +21,7 @@ public class PromoCodeController {
     }
 
     @GetMapping("/{promoCode}")
-    public PromoCode getPromoCodeByCode(@PathVariable String promoCode){
+    public GetPromoCodeResponseDTO getPromoCodeByCode(@PathVariable String promoCode){
         return promoCodeService.getPromoCodeByCode(promoCode);
     }
 

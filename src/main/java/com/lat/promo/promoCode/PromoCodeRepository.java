@@ -11,3 +11,8 @@ public interface PromoCodeRepository extends JpaRepository<PromoCode, Long> {
     @Query("SELECT pc FROM PromoCode pc WHERE pc.code = ?1")
     Optional<PromoCode> findPromoCodeByCode(String code);
 }
+
+// Purchase
+// Purchase.promoCode = PromoCode
+// WHERE
+// COUNT(*)

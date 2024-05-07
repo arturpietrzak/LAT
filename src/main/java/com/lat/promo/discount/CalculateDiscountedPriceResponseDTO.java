@@ -7,11 +7,13 @@ public class CalculateDiscountedPriceResponseDTO {
     private BigDecimal price;
     private Currency currency;
     private String message;
+    private boolean isValid;
 
-    public CalculateDiscountedPriceResponseDTO(BigDecimal price, Currency currency, String message) {
+    public CalculateDiscountedPriceResponseDTO(BigDecimal price, Currency currency, String message, boolean isValid) {
         this.price = price;
         this.currency = currency;
         this.message = message;
+        this.isValid = isValid;
     }
 
     public Currency getCurrency() {
@@ -24,5 +26,9 @@ public class CalculateDiscountedPriceResponseDTO {
 
     public String getMessage() {
         return message;
+    }
+
+    public boolean isValid() {
+        return isValid;
     }
 }

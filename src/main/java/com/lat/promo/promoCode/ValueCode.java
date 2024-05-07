@@ -20,14 +20,14 @@ public class ValueCode extends PromoCode{
     }
 
     @Autowired
-    public ValueCode(String code, LocalDate expirationDate, int maxUsagesAmount, int usagesAmountLeft, Currency currency, BigDecimal discountAmount) {
-        super(code, expirationDate, maxUsagesAmount, usagesAmountLeft);
+    public ValueCode(String code, LocalDate expirationDate, int maxUsagesAmount, Currency currency, BigDecimal discountAmount) {
+        super(code, expirationDate, maxUsagesAmount);
         this.currency = currency;
         this.discountAmount = discountAmount;
     }
 
-    public ValueCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, int usagesAmountLeft, Currency currency, BigDecimal discountAmount) {
-        super(id, code, expirationDate, maxUsagesAmount, usagesAmountLeft);
+    public ValueCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, Currency currency, BigDecimal discountAmount) {
+        super(id, code, expirationDate, maxUsagesAmount);
         this.currency = currency;
         this.discountAmount = discountAmount;
     }

@@ -1,5 +1,7 @@
 package com.lat.promo.promoCode;
 
+import com.lat.promo.purchase.PurchaseRepository;
+import com.lat.promo.purchase.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class PromoCodeService {
     @Autowired
     PromoCodeRepository promoCodeRepository;
+    @Autowired
+    PurchaseRepository purchaseRepository;
 
     public List<PromoCode> getAllPromoCodes() {
         return promoCodeRepository.findAll();
@@ -29,11 +33,12 @@ public class PromoCodeService {
         PromoCode promoCodeObject = promoCodeRepository.save(promoCode);
     }
 
-    public PromoCode getPromoCodeByCode(String code) {
+    public GetPromoCodeResponseDTO getPromoCodeByCode(String code) {
         Optional<PromoCode> promoCodeObject = promoCodeRepository.findPromoCodeByCode(code);
 
         if (promoCodeObject.isPresent()) {
-            return promoCodeObject.get();
+            int usagesLeft = purchaseRepository.findByPromoCode(promoCodeObject.get()).size();
+            return new GetPromoCodeResponseDTO(usagesLeft, promoCodeObject.get());
         } else {
             return null;
         }

@@ -18,17 +18,17 @@ public class Purchase {
     private Currency currency;
     private BigDecimal price;
     private BigDecimal discount;
-    @OneToOne
+    @ManyToOne
     private Product product;
-    @OneToOne
+    @ManyToOne
     private PromoCode promoCode;
 
     public Purchase() {
     }
 
     @Autowired
-    public Purchase(LocalDate dateOfPurchase, Currency currency, BigDecimal price, BigDecimal discount, Product product, PromoCode promoCode) {
-        this.dateOfPurchase = dateOfPurchase;
+    public Purchase(Currency currency, BigDecimal price, BigDecimal discount, Product product, PromoCode promoCode) {
+        this.dateOfPurchase = LocalDate.now();
         this.currency = currency;
         this.price = price;
         this.discount = discount;

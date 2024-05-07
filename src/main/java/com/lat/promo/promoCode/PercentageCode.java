@@ -16,13 +16,13 @@ public class PercentageCode extends PromoCode {
     }
 
     @Autowired
-    public PercentageCode(String code, LocalDate expirationDate, int maxUsagesAmount, int usagesAmountLeft, BigDecimal discountPercentage) {
-        super(code, expirationDate, maxUsagesAmount, usagesAmountLeft);
+    public PercentageCode(String code, LocalDate expirationDate, int maxUsagesAmount, BigDecimal discountPercentage) {
+        super(code, expirationDate, maxUsagesAmount);
         this.discountPercentage = discountPercentage;
     }
 
-    public PercentageCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, int usagesAmountLeft, BigDecimal discountPercentage) {
-        super(id, code, expirationDate, maxUsagesAmount, usagesAmountLeft);
+    public PercentageCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, BigDecimal discountPercentage) {
+        super(id, code, expirationDate, maxUsagesAmount);
         this.discountPercentage = discountPercentage;
     }
 

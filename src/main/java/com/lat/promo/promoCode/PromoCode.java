@@ -2,12 +2,16 @@ package com.lat.promo.promoCode;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.lat.promo.purchase.PurchaseService;
+import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.time.LocalDate;
 
+@Configurable
 @Entity
 @Inheritance
 @DiscriminatorColumn(name="PROMO_TYPE")
@@ -26,25 +30,23 @@ public abstract class PromoCode {
     private String code;
     private LocalDate expirationDate;
     private int maxUsagesAmount;
-    private int usagesAmountLeft;
+
 
     public PromoCode() {
     }
 
     @Autowired
-    public PromoCode(String code, LocalDate expirationDate, int maxUsagesAmount, int usagesAmountLeft) {
+    public PromoCode(String code, LocalDate expirationDate, int maxUsagesAmount) {
         this.code = code;
         this.expirationDate = expirationDate;
         this.maxUsagesAmount = maxUsagesAmount;
-        this.usagesAmountLeft = usagesAmountLeft;
     }
 
-    public PromoCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount, int usagesAmountLeft) {
+    public PromoCode(Long id, String code, LocalDate expirationDate, int maxUsagesAmount) {
         this.id = id;
         this.code = code;
         this.expirationDate = expirationDate;
         this.maxUsagesAmount = maxUsagesAmount;
-        this.usagesAmountLeft = usagesAmountLeft;
     }
 
     public Long getId() {
@@ -77,13 +79,5 @@ public abstract class PromoCode {
 
     public void setMaxUsagesAmount(int maxUsagesAmount) {
         this.maxUsagesAmount = maxUsagesAmount;
-    }
-
-    public int getUsagesAmountLeft() {
-        return usagesAmountLeft;
-    }
-
-    public void setUsagesAmountLeft(int usagesAmountLeft) {
-        this.usagesAmountLeft = usagesAmountLeft;
     }
 }
