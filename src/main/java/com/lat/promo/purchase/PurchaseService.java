@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
@@ -25,31 +26,43 @@ public class PurchaseService {
     @Autowired
     DiscountService discountService;
 
+    public PurchaseService(
+            PurchaseRepository purchaseRepository,
+            CouponService couponService,
+            ProductService productService,
+            DiscountService discountService
+    ) {
+        this.purchaseRepository = purchaseRepository;
+        this.couponService = couponService;
+        this.productService = productService;
+        this.discountService = discountService;
+    }
+
     public Purchase processPurchase(Long productId, String code) {
         Product product = productService.getProductById(productId);
-        Coupon couponObject = couponService.getCouponByCode(code);
         BigDecimal discount = new BigDecimal("0.00");
         Purchase purchase = null;
 
-        // If promoCode is null, create Purchase without any discount and return
+        // If code is null, create Purchase without any discount and return
         if (code == null) {
             purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
 
             try {
-                purchaseRepository.save(purchase);
+                return purchaseRepository.save(purchase);
             } catch (Exception e) {
                 return null;
             }
         }
 
         CalculateDiscountedPriceResponseDTO calculateDiscountedPriceResponseDTO = discountService.calculateDiscountedPrice(productId, code);
+        Coupon coupon = couponService.getCouponByCode(code);
 
         if (calculateDiscountedPriceResponseDTO.isValid()) {
-            discount = product.getPrice().subtract(calculateDiscountedPriceResponseDTO.getPrice());
-            purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, couponObject);
+            discount = product.getPrice().subtract(calculateDiscountedPriceResponseDTO.getPrice()).setScale(2, RoundingMode.FLOOR);
+            purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, coupon);
 
             try {
-                purchaseRepository.save(purchase);
+                return purchaseRepository.save(purchase);
             } catch (Exception e) {
                 return null;
             }
@@ -58,11 +71,9 @@ public class PurchaseService {
         purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, null);
 
         try {
-            purchaseRepository.save(purchase);
+            return purchaseRepository.save(purchase);
         } catch (Exception e) {
             return null;
         }
-
-        return purchase;
     }
 }
