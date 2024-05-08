@@ -2,17 +2,18 @@ package com.lat.promo.coupon;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Component
 public class CouponService {
     @Autowired
     CouponRepository couponRepository;
+
+    public CouponService(CouponRepository couponRepository) {
+        this.couponRepository = couponRepository;
+    }
 
     public List<Coupon> getAllCoupons() {
         return couponRepository.findAll();
