@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -29,14 +30,14 @@ public class DiscountService {
             String code
     ) {
         Product product = productService.getProductById(productId);
-        Coupon couponObject = couponService.getCouponByCode(code);
+        Coupon coupon = couponService.getCouponByCode(code);
         LocalDate today = LocalDate.now();
 
-        if (couponObject == null || product == null) {
+        if (coupon == null || product == null) {
             return null;
         }
 
-        if (couponObject.getUsagesLeft() <= 0) {
+        if (coupon.getUsagesLeft() <= 0) {
             return new CalculateDiscountedPriceResponseDTO(
                     product.getPrice(),
                     product.getCurrency(),
@@ -45,7 +46,7 @@ public class DiscountService {
             );
         }
 
-        if (couponObject.getExpirationDate().isBefore(today)) {
+        if (coupon.getExpirationDate().isBefore(today)) {
             return new CalculateDiscountedPriceResponseDTO(
                     product.getPrice(),
                     product.getCurrency(),
@@ -54,14 +55,14 @@ public class DiscountService {
             );
         }
 
-        if (couponObject instanceof ValueCoupon) {
-            ValueCoupon valueCoupon = (ValueCoupon) couponObject;
+        if (coupon instanceof ValueCoupon) {
+            ValueCoupon valueCoupon = (ValueCoupon) coupon;
 
             if (valueCoupon.getCurrency().equals(product.getCurrency())) {
                 BigDecimal discountedPrice = product.getPrice().subtract(valueCoupon.getDiscountAmount());
 
                 if (discountedPrice.compareTo(new BigDecimal(0)) <= 0) {
-                    discountedPrice = new BigDecimal(0);
+                    discountedPrice = new BigDecimal(0).setScale(2, RoundingMode.FLOOR);
                 }
 
                 return new CalculateDiscountedPriceResponseDTO(
@@ -80,10 +81,10 @@ public class DiscountService {
             );
         }
 
-        PercentageCoupon percentageCoupon = (PercentageCoupon) couponObject;
+        PercentageCoupon percentageCoupon = (PercentageCoupon) coupon;
         BigDecimal percentageDiscountedPrice = product.getPrice().subtract(
                 product.getPrice().multiply(percentageCoupon.getDiscountPercentage())
-        );
+        ).setScale(2, RoundingMode.DOWN);
 
         return new CalculateDiscountedPriceResponseDTO(
                 percentageDiscountedPrice,
