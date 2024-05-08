@@ -16,9 +16,13 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class DiscountService {
     @Autowired
     CouponService couponService;
-
     @Autowired
     ProductService productService;
+
+    public DiscountService(CouponService couponService, ProductService productService) {
+        this.couponService = couponService;
+        this.productService = productService;
+    }
 
     public CalculateDiscountedPriceResponseDTO calculateDiscountedPrice(
             Long productId,
