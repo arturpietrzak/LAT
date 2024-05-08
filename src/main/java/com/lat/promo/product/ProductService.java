@@ -15,8 +15,20 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     public Product addNewProduct(Product product) {
-        return productRepository.save(product);
+        Product newProduct = null;
+
+        try {
+            newProduct = productRepository.save(product);
+        } catch (Exception e) {
+            return null;
+        }
+
+        return newProduct;
     }
 
     public Product updateProduct(Long productId, Product product) {
