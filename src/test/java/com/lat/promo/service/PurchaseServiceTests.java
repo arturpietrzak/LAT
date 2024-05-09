@@ -178,6 +178,37 @@ public class PurchaseServiceTests {
     }
 
     @Test
+    void processPurchase_CouponCodeNotFound_ReturnPurchaseWithoutDiscount() {
+        Product product = new Product(
+                123L,
+                "Product",
+                null,
+                Currency.getInstance("EUR"),
+                new BigDecimal("20.00")
+        );
+        Coupon coupon = new ValueCoupon(
+                1L,
+                "value",
+                LocalDate.of(2010, 10, 5),
+                10,
+                Currency.getInstance("EUR"),
+                new BigDecimal("15.00")
+        );
+        coupon.setUsagesLeft(5);
+        Mockito.when(discountService.calculateDiscountedPrice(123L, "value")).thenReturn(null);
+        Mockito.when(couponRepository.findCouponByCode("value")).thenReturn(Optional.of(coupon));
+        Mockito.when(productRepository.findById(123L)).thenReturn(Optional.of(product));
+        Mockito.when(purchaseRepository.save(Mockito.any(Purchase.class))).then(returnsFirstArg());
+
+        Purchase purchase = purchaseService.processPurchase(123L, "value");
+
+        assertThat(purchase).isNotNull();
+        assertThat(purchase.getDiscount().equals(new BigDecimal("0.00"))).isTrue();
+        assertThat(purchase.getPrice().equals(new BigDecimal("20.00"))).isTrue();
+        assertThat(purchase.getProduct().getId()).isEqualTo(123L);
+    }
+
+    @Test
     void processPurchase_InvalidCouponCouldNotBeSaved_ReturnNull() {
         Product product = new Product(
                 123L,
