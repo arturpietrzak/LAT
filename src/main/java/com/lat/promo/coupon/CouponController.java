@@ -25,7 +25,7 @@ public class CouponController {
         return ResponseEntity.ok(couponService.getAllCoupons());
     }
 
-    @GetMapping("/{promoCode}")
+    @GetMapping("/{code}")
     public ResponseEntity<Coupon> getCouponByCode(@PathVariable String code){
         Coupon couponObject = couponService.getCouponByCode(code);
 
