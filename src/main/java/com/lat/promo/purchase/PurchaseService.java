@@ -57,6 +57,10 @@ public class PurchaseService {
         CalculateDiscountedPriceResponseDTO calculateDiscountedPriceResponseDTO = discountService.calculateDiscountedPrice(productId, code);
         Coupon coupon = couponService.getCouponByCode(code);
 
+        if (calculateDiscountedPriceResponseDTO == null) {
+            return null;
+        }
+
         if (calculateDiscountedPriceResponseDTO.isValid()) {
             discount = product.getPrice().subtract(calculateDiscountedPriceResponseDTO.getPrice()).setScale(2, RoundingMode.FLOOR);
             purchase = new Purchase(product.getCurrency(), product.getPrice(), discount, product, coupon);
