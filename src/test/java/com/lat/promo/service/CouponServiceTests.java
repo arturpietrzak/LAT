@@ -1,8 +1,6 @@
-package com.lat.promo;
+package com.lat.promo.service;
 
 import com.lat.promo.coupon.*;
-import com.lat.promo.product.Product;
-import com.lat.promo.product.ProductService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @ActiveProfiles("test")

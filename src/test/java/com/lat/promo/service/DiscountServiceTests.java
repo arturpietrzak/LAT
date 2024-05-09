@@ -1,4 +1,4 @@
-package com.lat.promo;
+package com.lat.promo.service;
 
 import com.lat.promo.coupon.*;
 import com.lat.promo.discount.CalculateDiscountedPriceResponseDTO;
@@ -12,12 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

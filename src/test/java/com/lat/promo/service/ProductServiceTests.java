@@ -1,4 +1,4 @@
-package com.lat.promo;
+package com.lat.promo.service;
 
 import com.lat.promo.product.Product;
 import com.lat.promo.product.ProductRepository;

@@ -1,4 +1,4 @@
-package com.lat.promo;
+package com.lat.promo.service;
 
 import com.lat.promo.coupon.Coupon;
 import com.lat.promo.coupon.CouponRepository;

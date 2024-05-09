@@ -1,5 +1,7 @@
 package com.lat.promo.product;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProducts(@PathVariable Long productId) {
+    public ResponseEntity<Product> getProduct(@PathVariable Long productId) {
         Product product = productService.getProductById(productId);
 
         if (product == null) {
