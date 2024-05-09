@@ -1,4 +1,4 @@
-# Promo codesa app for LAT
+# Promo codes app for LAT
 
 ## About this application
 This application is a REST API created for managing promo codes (coupons). It uses Spring framework and Java, and Maven is the build tool. The application uses H2 in-memory database. All constraints on values were applied and enforced using Jakarta Persistence. This application utilizes *Controller-Service-Repository* pattern.
